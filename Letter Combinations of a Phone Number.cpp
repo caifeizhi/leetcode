@@ -4,16 +4,23 @@ public:
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
         string digitToChar[] = {"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-        vector<string> res, tmp;
-        res.push_back("");
-        for (int i = 0; i < digits.size(); i++){
-            tmp.clear();
-            for (int j = 0; j < res.size(); j++){
-                for (int k = 0; k < digitToChar[digits[i] - '2'].size(); k++){
-                    tmp.push_back(res[j] + digitToChar[digits[i] - '2'][k]);
-                }
+        queue<string> result;
+        result.push("");
+        while (true){
+            string top = result.front();
+            int iter = top.size();
+            if (iter >= digits.size()) break;
+            
+            for (int i = 0; i < digitToChar[digits[iter] - '2'].size(); i++){
+                result.push(top + digitToChar[digits[iter] - '2'][i]);
             }
-            res = tmp;
+            result.pop();
+        }
+        
+        vector<string> res;
+        while(result.empty() == false){
+            res.push_back(result.front());
+            result.pop();
         }
         return res;
     }
